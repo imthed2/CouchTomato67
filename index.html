@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Daniel Hagen — Choice Tour (Expanded)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="intro" class="intro">
+    <div class="logo">
+      <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="18" fill="#0b0b0d"/>
+        <g transform="translate(20,20)" fill="#66d9a6">
+          <rect x="0" y="0" width="80" height="8" rx="4"/>
+          <rect x="0" y="18" width="80" height="8" rx="4"/>
+          <rect x="0" y="36" width="50" height="8" rx="4"/>
+        </g>
+      </svg>
+    </div>
+    <h1>Daniel Hagen — Choice Tour</h1>
+    <p class="sub">Et interaktivt, visuelt adventure med hemmelige slutninger</p>
+    <button id="start-btn">Start spil</button>
+  </div>
+
+  <div id="game" class="hidden">
+    <header>
+      <div class="title">
+        <h1>Daniel Hagen — Choice Tour</h1>
+        <p class="subtitle">Et interaktivt eventyr med dig i hovedrollen</p>
+      </div>
+      <div class="stats">
+        <div>Energi: <span id="stat-energy">--</span></div>
+        <div>Hygge: <span id="stat-hygge">--</span></div>
+        <div>Ry: <span id="stat-ry">--</span></div>
+      </div>
+    </header>
+
+    <main>
+      <aside class="left-panel">
+        <div class="avatar">
+          <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+            <rect width="120" height="160" rx="12" fill="#0f0f0f"/>
+            <circle cx="60" cy="48" r="26" fill="#f1c27d"/>
+            <rect x="30" y="85" width="60" height="55" rx="8" fill="#111"/>
+            <circle cx="46" cy="42" r="3" fill="#000"/>
+            <circle cx="74" cy="42" r="3" fill="#000"/>
+            <rect x="46" y="60" width="28" height="6" rx="3" fill="#111"/>
+          </svg>
+          <div class="name">Daniel Hagen</div>
+        </div>
+
+        <div class="inventory">
+          <h3>Inventory</h3>
+          <ul id="inventory-list"><li>(tom)</li></ul>
+        </div>
+
+        <div class="controls">
+          <button id="save-btn">Gem spil</button>
+          <button id="load-btn">Indlæs gemt</button>
+          <button id="restart-btn">Start forfra</button>
+        </div>
+      </aside>
+
+      <section class="story-panel">
+        <div id="scene-image" class="scene-image"></div>
+        <article id="text-area" class="text-area"></article>
+        <div id="choices" class="choices"></div>
+      </section>
+    </main>
+
+    <footer>
+      <small>Bygget til Netlify — kopier filerne i en mappe og deploy. God fornøjelse!</small>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // Intro logic
+    const intro = document.getElementById('intro');
+    const game = document.getElementById('game');
+    const startBtn = document.getElementById('start-btn');
+    startBtn.onclick = () => {
+      intro.classList.add('fade-out');
+      setTimeout(()=>{ intro.style.display='none'; game.classList.remove('hidden'); }, 700);
+    };
+  </script>
+</body>
+</html>
