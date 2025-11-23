@@ -74,15 +74,44 @@
     </footer>
   </div>
 
-  <script src="app.js" defer></script>
-  <script>
-    const intro = document.getElementById('intro');
-    const game = document.getElementById('game');
-    const startBtn = document.getElementById('start-btn');
-    startBtn.onclick = () => {
-      intro.classList.add('fade-out');
-      setTimeout(()=>{ intro.style.display='none'; game.classList.remove('hidden'); }, 700);
-    };
-  </script>
+<script src="app.js" defer></script>
+<script>
+  // Sikre referencer og tryggere flow ved start-knap
+  const intro = document.getElementById('intro');
+  const game = document.getElementById('game');
+  const startBtn = document.getElementById('start-btn');
+
+  // Når brugeren trykker start: vis game og KALD render() sikkert
+  startBtn.onclick = () => {
+    intro.classList.add('fade-out');
+    setTimeout(()=>{
+      intro.style.display = 'none';
+      game.classList.remove('hidden');
+
+      // Hvis render() eksisterer, kald den — ellers log fejlen
+      try {
+        if (typeof render === 'function') {
+          render();
+        } else {
+          console.warn('render() ikke fundet endnu — forsøger at vente 50ms og så igen');
+          // fallback: vent en smule hvis render er defineret lidt senere
+          setTimeout(()=>{ if (typeof render === 'function') render(); else console.error('render() stadig ikke defineret'); }, 50);
+        }
+      } catch(err) {
+        console.error('Fejl ved kald af render():', err);
+        alert('Fejl i spillet: se Console for detaljer.');
+      }
+
+    }, 700);
+  };
+
+  // Sikkerhed: hvis app.js er loaded og render findes tidligt, render initialt (så stat vises før start-knap hvis du ønsker det)
+  window.addEventListener('load', () => {
+    if (typeof render === 'function') {
+      // ikke automatiske show, men gør UI klar
+      try { render(); } catch(e){ console.warn('initial render fejlede:', e); }
+    }
+  });
+</script>
 </body>
 </html>
